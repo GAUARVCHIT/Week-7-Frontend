@@ -4,7 +4,7 @@ import HomePageAppbar from './components/HomePageAppbar/HomePageAppbar'
 import { Container } from '@mui/material'
 import FeaturedSection from './components/FeaturedSection/FeaturedSection'
 import { ArticleType } from './assets/Common/types'
-
+import Login from './components/authentication/Login/Login'
 // i want to import multiple image form the assets folder a one time
 import a from './assets/images/a.jpg'
 import b from './assets/images/b.jpg'
@@ -58,6 +58,8 @@ function App() {
       <Container maxWidth="lg">
         <FeaturedSection articles={articles} />
       </Container>
+
+      <Login />
 
 
     </>
