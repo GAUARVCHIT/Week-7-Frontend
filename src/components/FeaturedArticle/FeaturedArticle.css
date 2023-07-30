@@ -1,0 +1,8 @@
+.featured-article {
+    width: 75%;
+}
+
+.featured-article img {
+    width: 100%;
+    max-height: 380px;
+}
