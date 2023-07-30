@@ -18,7 +18,9 @@ import f from './assets/images/f.jpg'
 
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+  const [signIn, setSignIn] = useState(false);
+  const [signUp, setSignUp] = useState(false);
   const articles: ArticleType[] = [
     {
       image: a,
@@ -52,17 +54,31 @@ function App() {
     },
   ];
 
+  const handleSignInOpen = () => {
+     setSignIn(true);
+  };
 
+  const handleSignInClose = () => {
+    setSignIn(false);
+  };
+
+  const handleSignUpOpen = () => {
+    setSignUp(true);
+  };
+
+  const handleSignUpClose = () => {
+    setSignUp(false);
+  };
 
   return (
     <>
-      <HomePageAppbar />
+      <HomePageAppbar handleSignInOpen={handleSignInOpen}/>
 
       <Container maxWidth="lg">
         <FeaturedSection articles={articles} />
       </Container>
 
-      <Signin />
+      <Signin open={signIn} handleSingInClose={handleSignInClose} />
       <Signup />
     </>
   )

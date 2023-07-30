@@ -2,8 +2,11 @@ import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import { Box, Button, Grid, Typography } from '@mui/material'
 
+type Props = {
+    handleSignInOpen: () => void;
+};
 
-function HomePageAppbar() {
+const HomePageAppbar: React.FC<Props> = ({ handleSignInOpen }) => {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -16,8 +19,8 @@ function HomePageAppbar() {
                         <Grid item>
                             <Button color="inherit">Courses</Button>
                             <Button color="inherit">Blog</Button>
-                            <Button color="inherit" onClick={() => { }}>Log In</Button>
-                            <Button color="inherit" onClick={() => { }}>Log Out</Button>
+                            <Button color="inherit" onClick={handleSignInOpen}>Sign In</Button>
+                            <Button color="inherit" onClick={() => { }}>Sign Up</Button>
                         </Grid>
                     </Grid>
                 </Toolbar>

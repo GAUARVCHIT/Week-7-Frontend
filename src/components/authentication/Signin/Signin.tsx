@@ -8,6 +8,10 @@ import { Button, Dialog, DialogContent, DialogTitle, TextField, Typography, styl
 //     backgroundColor: '#e8e8e8',
 //   },
 // });
+type Props = {
+    open: boolean;
+    handleSingInClose: () => void;
+};
 
 const CustomTextField = styled(TextField)({
     '& label.Mui-focused': {
@@ -32,25 +36,25 @@ const CustomTextField = styled(TextField)({
     },
 });
 
-const Signin: React.FC = () => {
-    const [open, setOpen] = useState(false);
+const Signin: React.FC<Props> = ({open, handleSingInClose}) => {
+    // const [open, setOpen] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
+    // const handleClickOpen = () => {
+    //     setOpen(true);
+    // };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+    // const handleClose = () => {
+    //     setOpen(false);
+    // };
 
     return (
         <div>
-            <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+            {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                 Open Login Dialog
-            </Button>
-            <Dialog open={open} onClose={handleClose} maxWidth="xs" fullWidth PaperProps={{ style: { backgroundColor: '#121212', color: 'white' } }}>
+            </Button> */}
+            <Dialog open={open} onClose={handleSingInClose} maxWidth="xs" fullWidth PaperProps={{ style: { backgroundColor: '#121212', color: 'white' } }}>
                 <DialogContent style={{ padding: '50px', textAlign: 'center' }}>
                     <Typography align="center">100xDev</Typography>
                     <CustomTextField style={{margin: '50px auto 15px auto'}}
@@ -77,7 +81,7 @@ const Signin: React.FC = () => {
                     {/* <CustomButton onClick={handleClose} variant="contained" fullWidth>
             Login
           </CustomButton> */}
-                    <Button onClick={handleClose} color="primary" variant="contained" fullWidth style={{ color: 'white' }}>
+                    <Button onClick={handleSingInClose} color="primary" variant="contained" fullWidth style={{ color: 'white' }}>
                         Log in
                     </Button>
                 </DialogContent>
