@@ -9,6 +9,7 @@ type Props = {
 
 const FeaturedSection: React.FC<Props> = ({ articles }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
+    
 
     const handleArticleClick = (article: ArticleType) => {
         const index = articles.indexOf(article);
@@ -27,7 +28,7 @@ const FeaturedSection: React.FC<Props> = ({ articles }) => {
     return (
         <div className="featured-section">
             <FeaturedArticle article={articles[currentIndex]} />
-            <ArticleList articles={articles} currentArticle={articles[currentIndex]} onArticleClick={handleArticleClick} />
+            <ArticleList articles={articles} currentArticle={articles[currentIndex]} articleIndex={currentIndex} onArticleClick={handleArticleClick} />
         </div>
     );
 };

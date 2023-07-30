@@ -41,7 +41,7 @@
 }
 
 .progress-bar-container.active .progress-bar {
-    animation: progressBar 5s linear;
+    animation: none;
 }
 
 @keyframes progressBar {
