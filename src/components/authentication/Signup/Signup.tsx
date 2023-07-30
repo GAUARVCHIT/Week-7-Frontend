@@ -9,20 +9,6 @@ import { Button, Dialog, DialogContent, DialogTitle, TextField, Typography, styl
 //   },
 // });
 
-// const CustomTextField = styled(TextField)({
-//   '& .MuiOutlinedInput-root': {
-//     '& fieldset': {
-//       borderColor: 'white',
-//     },
-//     '&:hover fieldset': {
-//       borderColor: 'white',
-//     },
-//     '&.Mui-focused fieldset': {
-//       borderColor: 'white',
-//     },
-//   },
-// });
-
 const CustomTextField = styled(TextField)({
     '& label.Mui-focused': {
         color: 'white',
@@ -46,7 +32,7 @@ const CustomTextField = styled(TextField)({
     },
 });
 
-const LoginModal: React.FC = () => {
+const Signup: React.FC = () => {
     const [open, setOpen] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -62,7 +48,7 @@ const LoginModal: React.FC = () => {
     return (
         <div>
             <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                Open Login Dialog
+                Open Signup Dialog
             </Button>
             <Dialog open={open} onClose={handleClose} maxWidth="xs" fullWidth PaperProps={{ style: { backgroundColor: '#121212', color: 'white' } }}>
                 <DialogContent style={{ padding: '50px', textAlign: 'center' }}>
@@ -88,11 +74,9 @@ const LoginModal: React.FC = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    {/* <CustomButton onClick={handleClose} variant="contained" fullWidth>
-            Login
-          </CustomButton> */}
+
                     <Button onClick={handleClose} color="primary" variant="contained" fullWidth style={{ color: 'white' }}>
-                        Login
+                        Sign up
                     </Button>
                 </DialogContent>
             </Dialog>
@@ -100,4 +84,4 @@ const LoginModal: React.FC = () => {
     );
 };
 
-export default LoginModal;
+export default Signup;
