@@ -72,14 +72,14 @@ function App() {
 
   return (
     <>
-      <HomePageAppbar handleSignInOpen={handleSignInOpen}/>
+      <HomePageAppbar handleSignInOpen={handleSignInOpen} handleSignUpOpen={handleSignUpOpen}/>
 
       <Container maxWidth="lg">
         <FeaturedSection articles={articles} />
       </Container>
 
       <Signin open={signIn} handleSingInClose={handleSignInClose} />
-      <Signup />
+      <Signup open={signUp} handleSignUpClose={handleSignUpClose}/>
     </>
   )
 }

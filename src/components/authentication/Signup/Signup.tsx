@@ -8,6 +8,10 @@ import { Button, Dialog, DialogContent, DialogTitle, TextField, Typography, styl
 //     backgroundColor: '#e8e8e8',
 //   },
 // });
+type Props = {
+    open: boolean;
+    handleSignUpClose: () => void;
+};
 
 const CustomTextField = styled(TextField)({
     '& label.Mui-focused': {
@@ -32,25 +36,15 @@ const CustomTextField = styled(TextField)({
     },
 });
 
-const Signup: React.FC = () => {
-    const [open, setOpen] = useState(false);
+const Signup: React.FC<Props> = ({open, handleSignUpClose}) => {
+    // const [open, setOpen] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
 
     return (
         <div>
-            <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                Open Signup Dialog
-            </Button>
-            <Dialog open={open} onClose={handleClose} maxWidth="xs" fullWidth PaperProps={{ style: { backgroundColor: '#121212', color: 'white' } }}>
+            <Dialog open={open} onClose={handleSignUpClose} maxWidth="xs" fullWidth PaperProps={{ style: { backgroundColor: '#121212', color: 'white' } }}>
                 <DialogContent style={{ padding: '50px', textAlign: 'center' }}>
                     <Typography align="center">100xDev</Typography>
                     <CustomTextField style={{margin: '50px auto 15px auto'}}
@@ -75,7 +69,7 @@ const Signup: React.FC = () => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
 
-                    <Button onClick={handleClose} color="primary" variant="contained" fullWidth style={{ color: 'white' }}>
+                    <Button onClick={handleSignUpClose} color="primary" variant="contained" fullWidth style={{ color: 'white' }}>
                         Sign up
                     </Button>
                 </DialogContent>

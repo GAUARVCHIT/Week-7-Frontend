@@ -4,9 +4,10 @@ import { Box, Button, Grid, Typography } from '@mui/material'
 
 type Props = {
     handleSignInOpen: () => void;
+    handleSignUpOpen: () => void;
 };
 
-const HomePageAppbar: React.FC<Props> = ({ handleSignInOpen }) => {
+const HomePageAppbar: React.FC<Props> = ({ handleSignInOpen, handleSignUpOpen }) => {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -20,7 +21,7 @@ const HomePageAppbar: React.FC<Props> = ({ handleSignInOpen }) => {
                             <Button color="inherit">Courses</Button>
                             <Button color="inherit">Blog</Button>
                             <Button color="inherit" onClick={handleSignInOpen}>Sign In</Button>
-                            <Button color="inherit" onClick={() => { }}>Sign Up</Button>
+                            <Button color="inherit" onClick={handleSignUpOpen}>Sign Up</Button>
                         </Grid>
                     </Grid>
                 </Toolbar>
