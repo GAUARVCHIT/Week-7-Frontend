@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import HomePageAppbar from '../HomePageAppbar/HomePageAppbar';
 import { Container } from '@mui/material'
 import FeaturedSection from '../FeaturedSection/FeaturedSection'
@@ -13,12 +13,23 @@ import d from '../../assets/images/d.jpg'
 import e from '../../assets/images/e.jpg'
 import f from '../../assets/images/f.jpg'
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
+import { api } from '../../api/api';
+
+const refreshApi = axios.create({
+    baseURL: 'http://localhost:3000',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    timeout: 5000,
+});
 
 function StartingComponent() {
   const [signIn, setSignIn] = useState(false);
   const [signUp, setSignUp] = useState(false);
   const [authenticatedUser, setAuthenticatedUser] = useState<any>(null);
-  
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const articles: ArticleType[] = [
     {
       image: a,
@@ -52,6 +63,22 @@ function StartingComponent() {
     },
   ];
 
+  useEffect(() => {
+    api.get('/courses')
+      .then(() => {
+        setIsLoggedIn(true);
+        alert('login successful');
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 401) {
+          setIsLoggedIn(false);
+          console.log("login failed");
+        }
+      });
+  }, []);
+  
+    
+
   const handleSignInOpen = () => {
      setSignIn(true);
   };
@@ -59,7 +86,7 @@ function StartingComponent() {
   const handleSignInClose = async (username: string, password: string) => {
     try {
         // Make an API call to the login endpoint
-        const response = await axios.post(' http://localhost:3000/users/login', { username, password });
+        const response = await axios.post('http://localhost:3000/users/login', { username, password });
   
         // Handle successful login
         if (response.status === 200) {
