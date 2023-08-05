@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Dialog, DialogContent, DialogTitle, TextField, Typography, styled } from '@mui/material';
+import { Button, Dialog, DialogContent, TextField, Typography, styled } from '@mui/material';
 
 // const CustomButton = styled(Button)({
 //   backgroundColor: 'white',
@@ -10,7 +10,7 @@ import { Button, Dialog, DialogContent, DialogTitle, TextField, Typography, styl
 // });
 type Props = {
     open: boolean;
-    handleSingInClose: () => void;
+    handleSingInClose: (username: string, password: string) => void;
 };
 
 const CustomTextField = styled(TextField)({
@@ -37,24 +37,15 @@ const CustomTextField = styled(TextField)({
 });
 
 const Signin: React.FC<Props> = ({open, handleSingInClose}) => {
-    // const [open, setOpen] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
-    // const handleClickOpen = () => {
-    //     setOpen(true);
-    // };
-
-    // const handleClose = () => {
-    //     setOpen(false);
-    // };
 
     return (
         <div>
             {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                 Open Login Dialog
             </Button> */}
-            <Dialog open={open} onClose={handleSingInClose} maxWidth="xs" fullWidth PaperProps={{ style: { backgroundColor: '#121212', color: 'white' } }}>
+            <Dialog open={open} onClose={() => handleSingInClose(username, password)} maxWidth="xs" fullWidth PaperProps={{ style: { backgroundColor: '#121212', color: 'white' } }}>
                 <DialogContent style={{ padding: '50px', textAlign: 'center' }}>
                     <Typography align="center">100xDev</Typography>
                     <CustomTextField style={{margin: '50px auto 15px auto'}}
@@ -81,7 +72,7 @@ const Signin: React.FC<Props> = ({open, handleSingInClose}) => {
                     {/* <CustomButton onClick={handleClose} variant="contained" fullWidth>
             Login
           </CustomButton> */}
-                    <Button onClick={handleSingInClose} color="primary" variant="contained" fullWidth style={{ color: 'white' }}>
+                    <Button onClick={() => handleSingInClose(username, password)} color="primary" variant="contained" fullWidth style={{ color: 'white' }}>
                         Log in
                     </Button>
                 </DialogContent>

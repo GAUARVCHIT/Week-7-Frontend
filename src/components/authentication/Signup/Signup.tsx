@@ -10,7 +10,7 @@ import { Button, Dialog, DialogContent, DialogTitle, TextField, Typography, styl
 // });
 type Props = {
     open: boolean;
-    handleSignUpClose: () => void;
+    handleSignUpClose: (username: string, password: string) => void;
 };
 
 const CustomTextField = styled(TextField)({
@@ -69,7 +69,7 @@ const Signup: React.FC<Props> = ({open, handleSignUpClose}) => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
 
-                    <Button onClick={handleSignUpClose} color="primary" variant="contained" fullWidth style={{ color: 'white' }}>
+                    <Button onClick={() => handleSignUpClose(username, password)} color="primary" variant="contained" fullWidth style={{ color: 'white' }}>
                         Sign up
                     </Button>
                 </DialogContent>
