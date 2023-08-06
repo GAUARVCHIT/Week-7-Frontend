@@ -13,152 +13,148 @@ import d from '../../assets/images/d.jpg'
 import e from '../../assets/images/e.jpg'
 import f from '../../assets/images/f.jpg'
 import axios from 'axios';
-import jwtDecode from 'jwt-decode';
 import { api } from '../../api/api';
 
-const refreshApi = axios.create({
-    baseURL: 'http://localhost:3000',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    timeout: 5000,
-});
-
 function StartingComponent() {
-  const [signIn, setSignIn] = useState(false);
-  const [signUp, setSignUp] = useState(false);
-  const [authenticatedUser, setAuthenticatedUser] = useState<any>(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [signIn, setSignIn] = useState(false);
+    const [signUp, setSignUp] = useState(false);
+    const [authenticatedUser, setAuthenticatedUser] = useState<any>(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const articles: ArticleType[] = [
-    {
-      image: a,
-      smallImage: a,
-      title: 'Article 1: Understanding React',
-    },
-    {
-      image: b,
-      smallImage: b,
-      title: 'Article 2: Exploring TypeScript',
-    },
-    {
-      image: c,
-      smallImage: c,
-      title: 'Article 3: Building with Material-UI',
-    },
-    {
-      image: d,
-      smallImage: d,
-      title: 'Article 4: Best Practices in Web Design',
-    },
-    {
-      image: e,
-      smallImage: e,
-      title: 'Article 5: Advanced JavaScript Techniques',
-    },
-    {
-      image: f,
-      smallImage: f,
-      title: 'Article 6: Introduction to Redux',
-    },
-  ];
+    const articles: ArticleType[] = [
+        {
+            image: a,
+            smallImage: a,
+            title: 'Article 1: Understanding React',
+        },
+        {
+            image: b,
+            smallImage: b,
+            title: 'Article 2: Exploring TypeScript',
+        },
+        {
+            image: c,
+            smallImage: c,
+            title: 'Article 3: Building with Material-UI',
+        },
+        {
+            image: d,
+            smallImage: d,
+            title: 'Article 4: Best Practices in Web Design',
+        },
+        {
+            image: e,
+            smallImage: e,
+            title: 'Article 5: Advanced JavaScript Techniques',
+        },
+        {
+            image: f,
+            smallImage: f,
+            title: 'Article 6: Introduction to Redux',
+        },
+    ];
 
-  useEffect(() => {
-    api.get('/courses')
-      .then(() => {
-        setIsLoggedIn(true);
-        alert('login successful');
-      })
-      .catch((error) => {
-        if (error.response && error.response.status === 401) {
-          setIsLoggedIn(false);
-          console.log("login failed");
-        }
-      });
-  }, []);
-  
-    
+    useEffect(() => {
+        api.get('/courses')
+            .then(() => {
+                setIsLoggedIn(true);
+                setAuthenticatedUser({ userName: localStorage.getItem('userName') })
+                // alert('login successful');
+            })
+            .catch((error) => {
+                if (error.response && error.response.status === 401) {
+                    setIsLoggedIn(false);
+                    console.log("login failed");
+                }
+            });
+    }, []);
 
-  const handleSignInOpen = () => {
-     setSignIn(true);
-  };
 
-  const handleSignInClose = async (username: string, password: string) => {
-    try {
-        // Make an API call to the login endpoint
-        const response = await axios.post('http://localhost:3000/users/login', { username, password });
-  
-        // Handle successful login
-        if (response.status === 200) {
-          // Store the user's details and tokens
-          setAuthenticatedUser({
-            // username: response.data.username,
-            accessToken: response.data.accessToken,
-            refreshToken: response.data.refreshToken,
-          });
-  
-          // You might want to store the token in local storage as well, depending on your use case
-          localStorage.setItem('accessToken', response.data.accessToken);
-          localStorage.setItem('refreshToken', response.data.refreshToken);
-  
-          // Close the sign-in dialog
-          alert('Login successful!');
-          setSignIn(false);
-        }
-      } catch (error) {
-        // Handle login error
-        console.error('Login failed:', error);
-        // Optionally, you can set an error message in the state to display to the user
-      }
-    setSignIn(false);
-  };
 
-  const handleSignUpOpen = () => {
-    setSignUp(true);
-  };
+    const handleSignInOpen = () => {
+        setSignIn(true);
+    };
 
-  const handleSignUpClose = async (username: string, password: string) => {
-    try {
-        // Make an API call to the signup endpoint
-        const response = await axios.post(' http://localhost:3000/users/signup', { username, password });
-  
-        // Handle successful signup
-        if (response.status === 201) {
-          // Store the user's details and tokens
-        //   setAuthenticatedUser({
-        //     // username: response.data.username,
-        //     accessToken: response.data.accessToken,
-        //     refreshToken: response.data.refreshToken,
-        //   });
-  
-        //   // You might want to store the token in local storage as well, depending on your use case
-        //   localStorage.setItem('accessToken', response.data.accessToken);
-        //   localStorage.setItem('refreshToken', response.data.refreshToken);
-  
-          // Close the sign-up dialog
-          alert('Sign up successful!');
-          setSignUp(false);
-        }
+    const handleLogOut = () => {
+        isLoggedIn && setIsLoggedIn(false);
     }
-    catch (error) {
-        console.error('Sign up failed:', error);
-        // Optionally, you can set an error message in the state to display to the user
-    }
-    setSignUp(false);
-  };
 
-  return (
-    <>
-      <HomePageAppbar handleSignInOpen={handleSignInOpen} handleSignUpOpen={handleSignUpOpen}/>
+    const handleSignInClose = async (username: string, password: string) => {
+        try {
+            // Make an API call to the login endpoint
+            const response = await axios.post('http://localhost:3000/users/login', { username, password });
 
-      <Container maxWidth="lg">
-        <FeaturedSection articles={articles} />
-      </Container>
+            // Handle successful login
+            if (response.status === 200) {
+                // Store the user's details and tokens
+                setAuthenticatedUser({
+                    userName: response.data.userName,
+                });
 
-      <Signin open={signIn} handleSingInClose={handleSignInClose} />
-      <Signup open={signUp} handleSignUpClose={handleSignUpClose}/>
-    </>
-  )
+                // You might want to store the token in local storage as well, depending on your use case
+                localStorage.setItem('accessToken', response.data.accessToken);
+                localStorage.setItem('refreshToken', response.data.refreshToken);
+                localStorage.setItem('userName', response.data.userName);
+
+                // Close the sign-in dialog
+                // alert('Login successful!');
+                setSignIn(false);
+                setIsLoggedIn(true);
+            }
+        } catch (error) {
+            // Handle login error
+            console.error('Login failed:', error);
+            // Optionally, you can set an error message in the state to display to the user
+        }
+        setSignIn(false);
+    };
+
+    const handleSignUpOpen = () => {
+        setSignUp(true);
+    };
+
+    const handleSignUpClose = async (username: string, password: string) => {
+        try {
+            // Make an API call to the signup endpoint
+            const response = await axios.post(' http://localhost:3000/users/signup', { username, password });
+
+            // Handle successful signup
+            if (response.status === 201) {
+                // Store the user's details and tokens
+                //   setAuthenticatedUser({
+                //     // username: response.data.username,
+                //     accessToken: response.data.accessToken,
+                //     refreshToken: response.data.refreshToken,
+                //   });
+
+                //   // You might want to store the token in local storage as well, depending on your use case
+                //   localStorage.setItem('accessToken', response.data.accessToken);
+                //   localStorage.setItem('refreshToken', response.data.refreshToken);
+
+                // Close the sign-up dialog
+                // alert('Sign up successful!');
+                setSignUp(false);
+            }
+        }
+        catch (error) {
+            console.error('Sign up failed:', error);
+            // Optionally, you can set an error message in the state to display to the user
+        }
+        setSignUp(false);
+    };
+
+    return (
+        <>
+            <HomePageAppbar handleSignInOpen={handleSignInOpen} authenticatedUser={authenticatedUser} isLoggedIn={isLoggedIn} handleSignUpOpen={handleSignUpOpen} handleLogOut={handleLogOut} />
+
+            <Container maxWidth="lg">
+                <FeaturedSection articles={articles} />
+            </Container>
+
+            <Signin open={signIn} handleSingInClose={handleSignInClose} />
+            <Signup open={signUp} handleSignUpClose={handleSignUpClose} />
+        </>
+    )
 }
 
 export default StartingComponent

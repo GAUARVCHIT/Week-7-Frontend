@@ -23,6 +23,7 @@ api.interceptors.request.use(async config => {
             const response = await axios.post('http://localhost:3000/users/refresh', { refreshToken: localStorage.getItem('refreshToken') });
             if (response.status === 200) {
                 localStorage.setItem('accessToken', response.data.accessToken);
+                localStorage.setItem('userName', response.data.userName);
                 config.headers.Authorization = `${response.data.accessToken}`;
             }
         } else {
